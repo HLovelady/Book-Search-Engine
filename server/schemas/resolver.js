@@ -1,16 +1,29 @@
 const { Book, User } = require('../models');
 
 const resolvers = {
-//   Query: {
-//     tech: async () => {
-//       return Tech.find({});
-//     },
-//     matchups: async (parent, { _id }) => {
-//       const params = _id ? { _id } : {};
-//       return Matchup.find(params);
-//     },
-//   },
-//   Mutation: {
+   Query: {
+      me: {
+        // code to find ur USer --> Request to our DATAbase
+        // const userData = User.find()  --> Just use regular MONGOOSE methods
+        // return data
+      }
+  //     tech: async () => {
+  //       return Tech.find({});
+  //    }
+  //     matchups: async (parent, { _id }) => {
+  //       const params = _id ? { _id } : {};
+  //       return Matchup.find(params);
+  //     },
+  },
+   Mutation: {
+      addUser: async(parent, args, context) => {
+        console.log(args); //  --> { username: "", email: "", password: "" }
+        // args example here (username: String!, email: String!, password: String!)
+        const newUser = await User.create(args);
+        const token = "";
+
+        return { token, newUser }
+      } 
 //     createMatchup: async (parent, args) => {
 //       const matchup = await Matchup.create(args);
 //       return matchup;
