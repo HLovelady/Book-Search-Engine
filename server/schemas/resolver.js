@@ -40,7 +40,7 @@ const resolvers = {
             if (context.user){
                 return User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $addToSet: { savedBooks: bookData } }, //$push
+                    { $addToSet: { savedBooks: bookData } },
                     { new: true, runValidators: true }
                 )
 

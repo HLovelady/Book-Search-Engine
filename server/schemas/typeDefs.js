@@ -42,9 +42,7 @@ const typeDefs = gql`
    type Mutation {
       addUser(username: String!, email: String!, password: String!): Auth
       login(email: String!, password: String!): Auth
-      # function name/expected input parameters / return value
-#     createMatchup(tech1: String!, tech2: String!): Matchup
-#     createVote(_id: String!, techNum: Int!): Matchup
+      addBook(bookData: BookInput!): User
    }
 `;
 
