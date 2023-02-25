@@ -1,42 +1,41 @@
 const { Book, User } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
+
+const { User } = require('../models');
 
 const resolvers = {
-   Query: {
-      me: {
-        // code to find ur USer --> Request to our DATAbase
-        // const userData = User.find()  --> Just use regular MONGOOSE methods
-        // return data
-      }
-  //     tech: async () => {
-  //       return Tech.find({});
-  //    }
-  //     matchups: async (parent, { _id }) => {
-  //       const params = _id ? { _id } : {};
-  //       return Matchup.find(params);
-  //     },
-  },
-   Mutation: {
-      addUser: async(parent, args, context) => {
-        console.log(args); //  --> { username: "", email: "", password: "" }
-        // args example here (username: String!, email: String!, password: String!)
-        const newUser = await User.create(args);
-        const token = "";
+    Query: {
+        me: async (parent, args, context) => {
+            if (context.user) {
+                const userData = await User.findOne({ _id: context.user._id })
+                    .select('-__v -password')
 
-        return { token, newUser }
-      } 
-//     createMatchup: async (parent, args) => {
-//       const matchup = await Matchup.create(args);
-//       return matchup;
-//     },
-//     createVote: async (parent, { _id, techNum }) => {
-//       const vote = await Matchup.findOneAndUpdate(
-//         { _id },
-//         { $inc: { [`tech${techNum}_votes`]: 1 } },
-//         { new: true }
-//       );
-//       return book;
-//     },
-  },
-};
+                return userData;
+            }
+
+            throw new AuthenticationError('Not logged in');
+        }
+},
+    Mutation: {
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
+            const token = signToken(user);
+
+            return { token, user };
+        },
+        login: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+            if (!user) {
+                throw new AuthenticationError('No profile with this user found!');
+              }  
+            const correctPw = await user.isCorrectPassword(password);
+            if (!correctPw) {
+                throw new AuthenticationError('Incorrect credentials');
+            }
+            const token = signToken(user);
+            return { token, user };
+        },
+    }};
 
 module.exports = resolvers;
