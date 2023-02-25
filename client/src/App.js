@@ -27,7 +27,6 @@ import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 
 const client = new ApolloClient({
   // link: authLink.concat(httpLink),
-  // cache: new InMemoryCache()
   request: (operation) => {
     const token = localStorage.getItem("id_token");
 
@@ -50,7 +49,10 @@ function App() {
         <Switch>
           <Route exact path='/' component={SearchBooks} />
           <Route exact path='/saved' component={SavedBooks} />
-          <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
+          <Route
+              path="*"
+              element={<h1 className="display-2">Wrong page!</h1>}
+            />
         </Switch>
       </>
     </Router>
