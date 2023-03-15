@@ -1,7 +1,7 @@
 # Book-Search-Engine [![License: MIT](https://img.shields.io/badge/License-GNU-green.svg)](https://opensource.org/licenses/GNU)
 
 ## Description
-    This is the readme for the book search engine project. This fully functioning app was upated to use GraphQL API. The original API pathways were replaced with resolvers and typedefs to updated functionality. This app now runs using GraphQL API with apollo server
+
 	
 ## Table of Contents
 * [Installation](#installation)
