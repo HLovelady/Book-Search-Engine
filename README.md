@@ -14,7 +14,7 @@
 To install necessary depnedencies, run the follow commands in the terminal of your desired folder:
 
 ```
-git clone git@github.com:Nevin-Lewis/Book_Search_Engine.git
+git clone git@github.com:HLovelady/Book-Search-Engine.git
 ```
 Then navigate into the cloned folder and run:
 
